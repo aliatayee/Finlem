@@ -25,7 +25,7 @@ class InvitationMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.invitation',
+            markdown: 'emails.invitation',
             with: [
                 'acceptUrl' => route('invitations.accept', $this->invitation->token),
                 'inviterName' => $this->invitation->inviter->name,

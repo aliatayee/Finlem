@@ -62,6 +62,20 @@ class AdminTest extends TestCase
         Mail::assertSent(InvitationMail::class);
     }
 
+    public function test_invitation_email_renders_without_error(): void
+    {
+        // Mail::fake() never actually renders the Blade view, so it can't catch
+        // template/namespace bugs — render it for real here.
+        $admin = User::factory()->admin()->create();
+        $invitation = Invitation::factory()->for($admin, 'inviter')->create([
+            'email' => 'invitee@example.com',
+        ]);
+
+        $html = (new InvitationMail($invitation))->render();
+
+        $this->assertStringContainsString($invitation->token, $html);
+    }
+
     public function test_cannot_invite_an_email_that_already_belongs_to_a_user(): void
     {
         $admin = User::factory()->admin()->create();
