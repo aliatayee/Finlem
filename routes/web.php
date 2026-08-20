@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\TransactionPdfController;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
@@ -9,6 +10,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Volt::route('dashboard', 'dashboard')->name('dashboard');
 
     Volt::route('transactions', 'transactions.index')->name('transactions.index');
+    Route::get('transactions/export/pdf', TransactionPdfController::class)->name('transactions.export-pdf');
 
     Route::view('profile', 'profile')->name('profile');
 

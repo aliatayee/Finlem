@@ -122,6 +122,15 @@ new #[Layout('layouts.app')] class extends Component
                     @if ($fromDate || $toDate)
                         <button wire:click="resetFilters" class="text-sm text-indigo-600 dark:text-indigo-400 hover:underline text-left">Clear filters</button>
                     @endif
+
+                    <a
+                        href="{{ route('transactions.export-pdf', ['from' => $fromDate ?: null, 'to' => $toDate ?: null]) }}"
+                        target="_blank"
+                        class="w-full sm:w-auto sm:ms-auto inline-flex items-center justify-center gap-1.5 px-3 py-2 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-md font-semibold text-xs text-gray-700 dark:text-gray-300 uppercase tracking-widest hover:bg-gray-50 dark:hover:bg-gray-800 transition"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4"><path fill-rule="evenodd" d="M10 2a.75.75 0 01.75.75v8.69l2.22-2.22a.75.75 0 111.06 1.06l-3.5 3.5a.75.75 0 01-1.06 0l-3.5-3.5a.75.75 0 111.06-1.06l2.22 2.22V2.75A.75.75 0 0110 2zM3.75 14a.75.75 0 000 1.5h12.5a.75.75 0 000-1.5H3.75z" clip-rule="evenodd" /></svg>
+                        Download PDF
+                    </a>
                 </div>
             </div>
 

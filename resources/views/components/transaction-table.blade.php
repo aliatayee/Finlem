@@ -33,7 +33,12 @@
                             <span class="text-xs text-gray-400 dark:text-gray-500">{{ $transaction->occurred_on->format('M j, Y') }}</span>
                         </div>
                         @if ($transaction->description)
-                            <p class="text-sm text-gray-500 dark:text-gray-400 truncate">{{ $transaction->description }}</p>
+                            <p
+                                x-data="{ expanded: false }"
+                                x-on:click="expanded = !expanded"
+                                :class="expanded ? '' : 'truncate'"
+                                class="text-sm text-gray-500 dark:text-gray-400 cursor-pointer"
+                            >{{ $transaction->description }}</p>
                         @endif
                     </div>
                     <div class="flex items-center gap-2 shrink-0">

@@ -102,4 +102,22 @@ class TransactionTest extends TestCase
             ->assertSee('100.00')
             ->assertDontSee('999.00');
     }
+
+    public function test_guests_cannot_download_the_pdf_statement(): void
+    {
+        $this->get('/transactions/export/pdf')->assertRedirect('/login');
+    }
+
+    public function test_member_can_download_their_pdf_statement(): void
+    {
+        $user = User::factory()->create();
+
+        Transaction::factory()->for($user)->create(['type' => 'collection', 'amount' => 100, 'occurred_on' => '2026-08-01']);
+        Transaction::factory()->for($user)->create(['type' => 'expense', 'amount' => 40, 'occurred_on' => '2026-08-05']);
+
+        $response = $this->actingAs($user)->get('/transactions/export/pdf');
+
+        $response->assertOk();
+        $this->assertSame('application/pdf', $response->headers->get('Content-Type'));
+    }
 }
